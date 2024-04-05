@@ -48,7 +48,7 @@ struct ContentView: View {
             .resizable()
             .aspectRatio(contentMode: .fit)
             .onAppear {
-              store.downloadImageOffMainQueue(index: image.id)
+              store.downloadImageWithUrlSession(index: image.id)
             }
         }
       }
