@@ -78,7 +78,16 @@ class ImageStore: ObservableObject {
 
   func downloadImageOffMainQueue(index: Int) {
     // TODO: Episode 5
-    
+		DispatchQueue.global(qos: .utility).async { [weak self] in
+			guard let self else { return }
+			if
+				let data = try? Data(contentsOf: self.images[index].url),
+				let decodedImage = UIImage(data: data) {
+				DispatchQueue.main.async {
+					self.images[index].image = decodedImage
+				}
+			}
+		}
   }
 
   func downloadImageWithUrlSession(index: Int) {
